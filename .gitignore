@@ -4,3 +4,7 @@ __pycache__/
 
 # venv
 .vscode/
+
+# Jutpyter notebooks checkpoints
+eda/.ipynb_checkpoints/
+eda/.eda-finds.txt.swp

@@ -10,4 +10,5 @@ DocumenTitles to keep:
     Pharmaceutical industry
     John Steinbeck
     Jupiter
-    
+    Thomas Jefferson
+        
