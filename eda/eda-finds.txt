@@ -1,0 +1,13 @@
+number of questions: 296
+number of Document titles: 293
+The number of different types of questions is nearly equivalent to the number of questions.
+Looks like only 1 question per DocumenTitle.
+
+DocumenTitles to keep:
+    Pancreatic cancer
+    I Love Lucy
+    Aurora, Colorado
+    Pharmaceutical industry
+    John Steinbeck
+    Jupiter
+    
