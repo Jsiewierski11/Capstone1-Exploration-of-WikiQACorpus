@@ -40,3 +40,6 @@ def plot_wordcloud(text, mask=None, max_words=200, max_font_size=100, figure_siz
     plt.axis('off');
     plt.tight_layout()
     plt.savefig(filepath)
+
+def make_hist(x, y, filepath=None):
+    pass
