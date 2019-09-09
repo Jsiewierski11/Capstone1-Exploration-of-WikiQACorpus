@@ -10,11 +10,11 @@ from wordcloud import WordCloud, STOPWORDS
 import matplotlib.pyplot as plt
 
 #Define the word cloud function with a max of 200 words
-def plot_wordcloud(text, mask=None, max_words=1000, max_font_size=100, figure_size=(24.0,16.0), 
+def plot_wordcloud(text, mask=None, max_words=200, max_font_size=100, figure_size=(24.0,16.0), 
                    title = None, title_size=40, image_color=False, filepath=None):
     stopwords = set(STOPWORDS)
     #define additional stop words that are not contained in the dictionary
-    more_stopwords = {'one', 'br', 'Po', 'th', 'sayi', 'fo', 'Unknown'}
+    more_stopwords = {'one', 'br', 'Po', 'th', 'sayi', 'fo', 'Unknown', 'used'}
     stopwords = stopwords.union(more_stopwords)
     #Generate the word cloud
     wordcloud = WordCloud(background_color='black',

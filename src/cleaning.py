@@ -51,8 +51,15 @@ if __name__ == '__main__':
     # print(small_df)
 
     jefferson_df = small_df[small_df['DocumentTitle'] == 'Thomas Jefferson'].reset_index()
+
     plot_wordcloud(jefferson_df['Question'], title='Word Cloud of Questions relating to Thomas Jefferson', \
                    filepath='graphs/jefferson_question_wc.png')
 
     plot_wordcloud(jefferson_df['Sentence'], title='Word Cloud of Questions relating to Thomas Jefferson', \
                    filepath='graphs/jefferson_sentence_wc.png')
+
+    plot_wordcloud(text_df['DocumentTitle'], max_words=100000, title='Word Cloud of Whole Dataset\'s Doc Titles', \
+                   filepath='graphs/all_doc_titles.png')
+    
+    plot_wordcloud(text_df['Sentence'], max_words=1000000000, title='Word Cloud of Whole Dataset\'s Sentences', \
+                   filepath='graphs/all_doc_sentences.png')
