@@ -37,6 +37,14 @@ def read_cols(filepath):
 def drop_cols(df, cols):
     return df.drop(columns=cols)
 
+def get_all_answers(df, category):
+    return df[df['DocumentTitle'] == category].reset_index()
+
+def wordcloud_of_answers(df, categories):
+        for label in categories:
+            new_df = get_all_answers(df, label)
+            plot_wordcloud(new_df['Sentence'], max_words=1000, title=label, filepath='graphs/{}.png'.format(label))
+
 if __name__ == '__main__':
     # reading in data
     text_df = pd.read_csv('data/WikiQA.tsv', sep="\t")
@@ -62,5 +70,10 @@ if __name__ == '__main__':
     # plot_wordcloud(healthcare_df['Sentence'], max_words = 999999999999, title='Word Cloud of QA Healtcare Dataset Answers', \
     #                              filepath='graphs/healthcareAs_wc.png')
 
+    # Bar chart of answers per question
     val_count = healthcare_df['DocumentTitle'].value_counts()
     make_barchart(val_count.index, val_count, filepath='graphs/answers_per_question.png', figsize=(35, 15), title='Number of answers for each category')    
+    
+    # Word Cloud of Top 5 Categories with the most answers
+    top_5 = ['List of muscles of the human body', 'Meiosis', 'Mandibular first molar', 'Drug test', 'Antibody', 'Cellular respiration']
+    wordcloud_of_answers(healthcare_df, top_5)
