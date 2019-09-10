@@ -48,3 +48,12 @@ def make_barchart(x, y, filepath=None, figsize=(12, 8), title=None):
     if title is not None:
         fig.set_title(title, fontsize=25)
     plt.savefig(filepath)
+
+def pretty_plot_top_n(series, top_n=5, index_level=0):
+    r = series\
+    .groupby(level=index_level)\
+    .nlargest(top_n)\
+    .reset_index(level=index_level, drop=True)
+    make_barchart(r.index, r, filepath='graphs/top_n_word_count.png', figsize=(50, 30), title='Counts of the Top 3 Words in Answers for Each Question')
+    # r.plot.bar()
+    # plt.set_title('Counts of the Top 3 Words in Answers for Each Question')

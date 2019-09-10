@@ -45,6 +45,31 @@ def wordcloud_of_answers(df, categories):
             new_df = get_all_answers(df, label)
             plot_wordcloud(new_df['Sentence'], max_words=1000, title=label, filepath='graphs/{}.png'.format(label))
 
+def create_words_col(df):
+    df['words'] = df['Sentence'].str.strip().str.split('[\W_]+')
+    return df
+
+def parse_words_to_word(df):
+    rows = list()
+    for row in df[['Question', 'words']].iterrows():
+        r = row[1]
+        for word in r.words:
+            rows.append((r['Question'], word))
+
+    return pd.DataFrame(rows, columns=['Question', 'word'])
+
+def remove_empty_word_cols(df):
+    words = df[df.word.str.len() > 0]
+    words.word.str.lower()
+    return words
+
+def count_word_ocurrence(df):
+    counts = df.groupby('Question')\
+            .word.value_counts()\
+            .to_frame()\
+            .rename(columns={'word':'n_w'})
+    return counts
+
 if __name__ == '__main__':
     # reading in data
     text_df = pd.read_csv('data/WikiQA.tsv', sep="\t")
@@ -77,3 +102,10 @@ if __name__ == '__main__':
     # Word Cloud of Top 5 Categories with the most answers
     top_5 = ['List of muscles of the human body', 'Meiosis', 'Mandibular first molar', 'Drug test', 'Antibody', 'Cellular respiration']
     wordcloud_of_answers(healthcare_df, top_5)
+
+    # Pipeline for counting words
+    healthcare_df = create_words_col(healthcare_df)
+    words_df = parse_words_to_word(healthcare_df)
+    words_df = remove_empty_word_cols(words_df)
+    counts_df = count_word_ocurrence(words_df)
+    pretty_plot_top_n(counts_df['n_w'], top_n=1)
