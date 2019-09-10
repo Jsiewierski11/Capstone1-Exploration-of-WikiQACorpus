@@ -41,5 +41,10 @@ def plot_wordcloud(text, mask=None, max_words=200, max_font_size=100, figure_siz
     plt.tight_layout()
     plt.savefig(filepath)
 
-def make_hist(x, y, filepath=None):
-    pass
+def make_barchart(x, y, filepath=None, figsize=(12, 8), title=None):
+    ax, fig = plt.subplots(1,1, figsize=figsize)
+    plt.barh(range(len(x)), width=y)
+    plt.yticks(range(len(x)), x, fontsize=14)
+    if title is not None:
+        fig.set_title(title, fontsize=25)
+    plt.savefig(filepath)

@@ -54,15 +54,13 @@ if __name__ == '__main__':
     # cleaning data
     
     healthcare_df = select_doc_titles(text_df, titles)
-    print(healthcare_df.head())
     healthcare_df = drop_cols(healthcare_df, drops)
-    print("After Drops:\n")
-    print(healthcare_df.head())
-    # print(healthcare_df['DocumentTitle'].unique())
 
-    plot_wordcloud(healthcare_df['DocumentTitle'], max_words = 999999999999, title='Word Cloud of QA Healtcare Dataset Question Types', \
-                                 filepath='graphs/healthcareQs_wc.png')
+    # plot_wordcloud(healthcare_df['DocumentTitle'], max_words = 999999999999, title='Word Cloud of QA Healtcare Dataset Question Types', \
+    #                              filepath='graphs/healthcareQs_wc.png')
 
-    plot_wordcloud(healthcare_df['Sentence'], max_words = 999999999999, title='Word Cloud of QA Healtcare Dataset Answers', \
-                                 filepath='graphs/healthcareAs_wc.png')
-    
+    # plot_wordcloud(healthcare_df['Sentence'], max_words = 999999999999, title='Word Cloud of QA Healtcare Dataset Answers', \
+    #                              filepath='graphs/healthcareAs_wc.png')
+
+    val_count = healthcare_df['DocumentTitle'].value_counts()
+    make_barchart(val_count.index, val_count, filepath='graphs/answers_per_question.png', figsize=(35, 15), title='Number of answers for each category')    
