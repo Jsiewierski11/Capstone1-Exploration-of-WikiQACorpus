@@ -42,24 +42,27 @@ if __name__ == '__main__':
     text_df = pd.read_csv('data/WikiQA.tsv', sep="\t")
 
     # reading in columns to select/drop
-    titles = read_cols('data/cols_to_use.txt')
+    titles = read_cols('data/titles_to_use.txt')
     drops = read_cols('data/cols_to_drop.txt')
 
-    # cleaning data
-    small_df = select_doc_titles(text_df, titles)
-    small_df = drop_cols(small_df, drops)
-    # print(small_df)
-
-    jefferson_df = small_df[small_df['DocumentTitle'] == 'Thomas Jefferson'].reset_index()
-
-    plot_wordcloud(jefferson_df['Question'], title='Word Cloud of Questions relating to Thomas Jefferson', \
-                   filepath='graphs/jefferson_question_wc.png')
-
-    plot_wordcloud(jefferson_df['Sentence'], title='Word Cloud of Questions relating to Thomas Jefferson', \
-                   filepath='graphs/jefferson_sentence_wc.png')
-
-    plot_wordcloud(text_df['DocumentTitle'], max_words=100000, title='Word Cloud of Whole Dataset\'s Doc Titles', \
-                   filepath='graphs/all_doc_titles.png')
+    # plot_wordcloud(text_df['DocumentTitle'], max_words=100000, title='Word Cloud of Whole Dataset\'s Doc Titles', \
+    #                filepath='graphs/all_doc_titles.png')
     
-    plot_wordcloud(text_df['Sentence'], max_words=1000000000, title='Word Cloud of Whole Dataset\'s Sentences', \
-                   filepath='graphs/all_doc_sentences.png')
+    # plot_wordcloud(text_df['Sentence'], max_words=1000000000, title='Word Cloud of Whole Dataset\'s Sentences', \
+                    # filepath='graphs/all_doc_sentences.png')
+
+    # cleaning data
+    
+    healthcare_df = select_doc_titles(text_df, titles)
+    print(healthcare_df.head())
+    healthcare_df = drop_cols(healthcare_df, drops)
+    print("After Drops:\n")
+    print(healthcare_df.head())
+    # print(healthcare_df['DocumentTitle'].unique())
+
+    plot_wordcloud(healthcare_df['DocumentTitle'], max_words = 999999999999, title='Word Cloud of QA Healtcare Dataset Question Types', \
+                                 filepath='graphs/healthcareQs_wc.png')
+
+    plot_wordcloud(healthcare_df['Sentence'], max_words = 999999999999, title='Word Cloud of QA Healtcare Dataset Answers', \
+                                 filepath='graphs/healthcareAs_wc.png')
+    
