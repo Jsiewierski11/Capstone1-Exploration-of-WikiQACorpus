@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np 
 from plotting import *
 
-
 def select_doc_titles(df, titles):
     '''
     Parameters:
@@ -70,6 +69,13 @@ def count_word_ocurrence(df):
             .rename(columns={'word':'n_w'})
     return counts
 
+
+def count_words_pipeline(df):
+    df = create_words_col(df)
+    words_df = parse_words_to_word(df)
+    words_df = remove_empty_word_cols(words_df)
+    return count_word_ocurrence(words_df)
+
 if __name__ == '__main__':
     # reading in data
     text_df = pd.read_csv('data/WikiQA.tsv', sep="\t")
@@ -103,9 +109,13 @@ if __name__ == '__main__':
     top_5 = ['List of muscles of the human body', 'Meiosis', 'Mandibular first molar', 'Drug test', 'Antibody', 'Cellular respiration']
     wordcloud_of_answers(healthcare_df, top_5)
 
-    # Pipeline for counting words
-    healthcare_df = create_words_col(healthcare_df)
-    words_df = parse_words_to_word(healthcare_df)
-    words_df = remove_empty_word_cols(words_df)
-    counts_df = count_word_ocurrence(words_df)
+    counts_df = count_words_pipeline(healthcare_df)
     pretty_plot_top_n(counts_df['n_w'], top_n=1)
+
+    top_n_dfs = []
+    for label in top_5:
+        temp_df = get_all_answers(healthcare_df, label)
+        cleaned = count_words_pipeline(temp_df)
+        top_n_dfs.append(cleaned['n_w'])
+
+    plot_multi_top_n(top_n_dfs, filepath='graphs/collaged_topn.png', numrows=2, numcols=3)

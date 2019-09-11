@@ -45,15 +45,41 @@ def make_barchart(x, y, filepath=None, figsize=(12, 8), title=None):
     ax, fig = plt.subplots(1,1, figsize=figsize)
     plt.barh(range(len(x)), width=y)
     plt.yticks(range(len(x)), x, fontsize=14)
+
     if title is not None:
         fig.set_title(title, fontsize=25)
+    
     plt.savefig(filepath)
 
-def pretty_plot_top_n(series, top_n=5, index_level=0):
+def pretty_plot_top_n(series, top_n=5, index_level=0, filepath=None):
     r = series\
-    .groupby(level=index_level)\
-    .nlargest(top_n)\
-    .reset_index(level=index_level, drop=True)
-    make_barchart(r.index, r, filepath='graphs/top_n_word_count.png', figsize=(50, 30), title='Counts of the Top 3 Words in Answers for Each Question')
-    # r.plot.bar()
-    # plt.set_title('Counts of the Top 3 Words in Answers for Each Question')
+        .groupby(level=index_level)\
+        .nlargest(top_n)\
+        .reset_index(level=index_level, drop=True)
+
+    make_barchart(r.index, r, filepath='graphs/top_n_word_count.png', figsize=(50, 30), \
+                  title='Counts of the Top 3 Words in Answers for Each Question')
+
+def plot_multi_top_n(series_arr, index_level=0, top_n=5, filepath=None, numrows=1, numcols=1):
+    fig, axs = plt.subplots(numrows, numcols, figsize=(50,30))
+    index = 0
+    for i in range(0, numrows):
+        for j in range(0, numcols):
+            # Check for end of array
+            if index == len(series_arr):
+                plt.savefig(filepath)
+                plt.tight_layout()
+                return
+            r = series_arr[index]\
+                .groupby(level=index_level)\
+                .nlargest(top_n)\
+                .reset_index(level=index_level, drop=True)
+            ax = axs[i, j]
+            ax.set_yticklabels(r.index)
+            ax.set_title(r.index[0][0])
+            ax.barh(range(len(r.index)), width=r)
+            
+            index += 1
+
+    plt.tight_layout()
+    plt.savefig(filepath)
