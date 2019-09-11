@@ -70,15 +70,17 @@ def plot_multi_top_n(series_arr, index_level=0, top_n=5, filepath=None, numrows=
                 plt.savefig(filepath)
                 plt.tight_layout()
                 return
-            r = series_arr[index]\
-                .groupby(level=index_level)\
-                .nlargest(top_n)\
+            r = series_arr[index] \
+                .groupby(level=index_level) \
+                .nlargest(top_n) \
                 .reset_index(level=index_level, drop=True)
             ax = axs[i, j]
+            ax.set_yticks(list(range(len(r.index))))
             ax.set_yticklabels(r.index)
-            ax.set_title(r.index[0][0])
             ax.barh(range(len(r.index)), width=r)
-            
+            title = r.index[0][0]
+            ax.set_title(title)
+
             index += 1
 
     plt.tight_layout()

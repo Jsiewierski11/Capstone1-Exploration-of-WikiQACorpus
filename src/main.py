@@ -15,8 +15,7 @@ if __name__ == '__main__':
     # plot_wordcloud(text_df['Sentence'], max_words=1000000000, title='Word Cloud of Whole Dataset\'s Sentences', \
                     # filepath='graphs/all_doc_sentences.png')
 
-    # cleaning data
-    
+    # Narrowing dataset    
     healthcare_df = select_doc_titles(text_df, titles)
     healthcare_df = drop_cols(healthcare_df, drops)
 
@@ -34,6 +33,7 @@ if __name__ == '__main__':
     top_5 = ['List of muscles of the human body', 'Meiosis', 'Mandibular first molar', \
              'Comparison of the health care systems in Canada and the United States', \
              'Antibody', 'Cellular respiration']
+
     wordcloud_of_answers(healthcare_df, top_5)
 
     counts_df = count_words_pipeline(healthcare_df)
@@ -45,4 +45,6 @@ if __name__ == '__main__':
         cleaned = count_words_pipeline(temp_df)
         top_n_dfs.append(cleaned['n_w'])
 
-    plot_multi_top_n(top_n_dfs, filepath='graphs/collaged_topn.png', numrows=2, numcols=3)
+    # print(top_n_dfs[0])
+
+    plot_multi_top_n(top_n_dfs, filepath='graphs/collaged_topn.png', top_n=5, numrows=2, numcols=3)

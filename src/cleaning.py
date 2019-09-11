@@ -50,12 +50,12 @@ def create_words_col(df):
 
 def parse_words_to_word(df):
     rows = list()
-    for row in df[['Question', 'words']].iterrows():
+    for row in df[['DocumentTitle', 'words']].iterrows():
         r = row[1]
         for word in r.words:
-            rows.append((r['Question'], word))
+            rows.append((r['DocumentTitle'], word))
 
-    return pd.DataFrame(rows, columns=['Question', 'word'])
+    return pd.DataFrame(rows, columns=['DocumentTitle', 'word'])
 
 def remove_empty_word_cols(df):
     words = df[df.word.str.len() > 0]
@@ -63,7 +63,7 @@ def remove_empty_word_cols(df):
     return words
 
 def count_word_ocurrence(df):
-    counts = df.groupby('Question')\
+    counts = df.groupby('DocumentTitle')\
             .word.value_counts()\
             .to_frame()\
             .rename(columns={'word':'n_w'})
