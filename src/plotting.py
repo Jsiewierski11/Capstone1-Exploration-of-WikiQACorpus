@@ -58,7 +58,7 @@ def pretty_plot_top_n(series, top_n=5, index_level=0, filepath=None):
         .reset_index(level=index_level, drop=True)
 
     make_barchart(r.index, r, filepath='graphs/top_n_word_count.png', figsize=(50, 30), \
-                  title='Counts of the Top 3 Words in Answers for Each Question')
+                  title='Count of the Most Frequent Word in all Answers for Each Question')
 
 def plot_multi_top_n(series_arr, index_level=0, top_n=5, filepath=None, numrows=1, numcols=1):
     fig, axs = plt.subplots(numrows, numcols, figsize=(50,30))
