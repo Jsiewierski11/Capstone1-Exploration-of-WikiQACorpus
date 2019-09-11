@@ -8,6 +8,7 @@ https://www.kaggle.com/sudalairajkumar/simple-exploration-notebook-qiqc
 #import the wordcloud package
 from wordcloud import WordCloud, STOPWORDS
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 #Define the word cloud function with a max of 200 words
 def plot_wordcloud(text, mask=None, max_words=200, max_font_size=100, figure_size=(24.0,16.0), 
@@ -85,3 +86,43 @@ def plot_multi_top_n(series_arr, index_level=0, top_n=5, filepath=None, numrows=
 
     plt.tight_layout()
     plt.savefig(filepath)
+
+def make_counts_violin(df, filepath='graphs/violinplot.png'):
+    fig, ax = plt.subplots(figsize =(9, 7)) 
+    sns.violinplot(ax = ax,  y = df['n_w'] )
+    fig.savefig(filepath)
+
+
+def pareto_plot(df, x=None, y=None, title=None, number_categories = 10, show_pct_y=False, pct_format='{0:.0%}'):    
+    dfplot = df[[x,y]]
+    #dfplot[y] = dfplot[y].abs() #some channels showed negative counts but I checked and they should be the positive value    dfsorted = dfplot.sort_values(y, ascending=False)    df_shortened = dfsorted[0:number_categories] #added for when there are too many categories to plot
+    df_remaining = dfsorted[number_categories:df.shape[0]]    
+    xlabel = x
+    ylabel = y
+    tmp = df_shortened.sort_values(y, ascending=False)
+    tmp = tmp.append({x : 'Other' , y : df_remaining[y].abs().sum()}, ignore_index=True) #adds in an other category which has the sum of the remainder
+    x = tmp[x].values
+    y = tmp[y].values
+    weights = y / y.sum()
+    cumsum = weights.cumsum()    
+    fig, ax1 = plt.subplots(figsize = (6,6)) #figsize adjusted to account for rotated labels
+    ax1.bar(x, y)
+    ax1.set_xlabel(xlabel)
+    ax1.tick_params(axis = 'x', rotation = 90) #rotation for longer category names
+    ax1.set_ylabel(ylabel)    
+    ax2 = ax1.twinx()
+    #ax2.ylim(0, 1.0)
+    ax2.plot(x, cumsum, '-ro', alpha=0.5)
+    ax2.set_ylabel('', color='r')
+    ax2.tick_params('y', colors='r', rotation = 'auto')    
+    vals = ax2.get_yticks()
+    ax2.set_yticklabels(['{:,.2%}'.format(x) for x in vals])    # hide y-labels on right side
+    if not show_pct_y:
+        ax2.set_yticks([])    
+        formatted_weights = [pct_format.format(x) for x in cumsum]
+    for i, txt in enumerate(formatted_weights):
+        ax2.annotate(txt, (x[i], cumsum[i]), fontweight='heavy')    
+        if title:
+            plt.title(title)   
+    plt.tight_layout()
+    plt.show();

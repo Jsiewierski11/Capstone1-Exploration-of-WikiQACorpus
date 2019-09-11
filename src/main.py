@@ -37,14 +37,18 @@ if __name__ == '__main__':
     wordcloud_of_answers(healthcare_df, top_5)
 
     counts_df = count_words_pipeline(healthcare_df)
+    total_counts_df = count_words_pipeline(text_df)
     pretty_plot_top_n(counts_df['n_w'], top_n=1)
 
     top_n_dfs = []
     for label in top_5:
         temp_df = get_all_answers(healthcare_df, label)
         cleaned = count_words_pipeline(temp_df)
+        make_counts_violin(cleaned, filepath='graphs/{}_violin.png'.format(label))
         top_n_dfs.append(cleaned['n_w'])
 
     # print(top_n_dfs[0])
 
     plot_multi_top_n(top_n_dfs, filepath='graphs/collaged_topn.png', top_n=5, numrows=2, numcols=3)
+    make_counts_violin(counts_df, filepath='graphs/healthcare_violin.png')
+    make_counts_violin(total_counts_df, filepath='graphs/wikiQA_violin.png')
