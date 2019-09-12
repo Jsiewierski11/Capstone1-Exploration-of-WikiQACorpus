@@ -1,6 +1,7 @@
 import pandas as pd 
 import numpy as np 
 from plotting import *
+from nltk.corpus import stopwords
 
 def select_doc_titles(df, titles):
     '''
@@ -57,6 +58,11 @@ def parse_words_to_word(df):
 
     return pd.DataFrame(rows, columns=['DocumentTitle', 'word'])
 
+def remove_stop_words(df):
+    stop = stopwords.words('english')
+    df['word'] = df['word'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
+    return df
+
 def remove_empty_word_cols(df):
     words = df[df.word.str.len() > 0]
     words.word.str.lower()
@@ -70,9 +76,11 @@ def count_word_ocurrence(df):
     return counts
 
 
-def count_words_pipeline(df):
+def count_words_pipeline(df, remove_stop=False):
     df = create_words_col(df)
     words_df = parse_words_to_word(df)
+    if remove_stop:
+        words_df = remove_stop_words(words_df)
     words_df = remove_empty_word_cols(words_df)
     return count_word_ocurrence(words_df)
 
