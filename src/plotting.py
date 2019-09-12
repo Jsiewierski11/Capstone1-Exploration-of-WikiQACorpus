@@ -41,6 +41,7 @@ def plot_wordcloud(text, mask=None, max_words=200, max_font_size=100, figure_siz
     plt.axis('off');
     plt.tight_layout()
     plt.savefig(filepath)
+    plt.close()
 
 def make_barchart(x, y, filepath=None, figsize=(12, 8), title=None):
     ax, fig = plt.subplots(1,1, figsize=figsize)
@@ -51,6 +52,7 @@ def make_barchart(x, y, filepath=None, figsize=(12, 8), title=None):
         fig.set_title(title, fontsize=25)
     
     plt.savefig(filepath)
+    plt.close()
 
 def pretty_plot_top_n(series, top_n=5, index_level=0, filepath=None):
     r = series\
@@ -58,7 +60,7 @@ def pretty_plot_top_n(series, top_n=5, index_level=0, filepath=None):
         .nlargest(top_n)\
         .reset_index(level=index_level, drop=True)
 
-    make_barchart(r.index, r, filepath='graphs/top_n_word_count.png', figsize=(50, 30), \
+    make_barchart(r.index, r, filepath=filepath, figsize=(50, 30), \
                   title='Count of the Most Frequent Word in all Answers for Each Question')
 
 def plot_multi_top_n(series_arr, index_level=0, top_n=5, filepath=None, numrows=1, numcols=1):
@@ -70,6 +72,7 @@ def plot_multi_top_n(series_arr, index_level=0, top_n=5, filepath=None, numrows=
             if index == len(series_arr):
                 plt.savefig(filepath)
                 plt.tight_layout()
+                plt.close()
                 return
             r = series_arr[index] \
                 .groupby(level=index_level) \
@@ -86,11 +89,13 @@ def plot_multi_top_n(series_arr, index_level=0, top_n=5, filepath=None, numrows=
 
     plt.tight_layout()
     plt.savefig(filepath)
+    plt.close()
 
 def make_counts_violin(df, filepath='graphs/violinplot.png'):
     fig, ax = plt.subplots(figsize =(9, 7)) 
     sns.violinplot(ax = ax,  y = df['n_w'] )
     fig.savefig(filepath)
+    plt.close()
 
 
 def pareto_plot(df, x=None, y=None, title=None, number_categories = 10, show_pct_y=False, pct_format='{0:.0%}'):    

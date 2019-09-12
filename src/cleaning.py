@@ -60,19 +60,20 @@ def parse_words_to_word(df):
 
 def remove_stop_words(df):
     stop = stopwords.words('english')
+    df['word'] = df.word.str.lower()
     df['word'] = df['word'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
     return df
 
 def remove_empty_word_cols(df):
     words = df[df.word.str.len() > 0]
-    words.word.str.lower()
     return words
 
 def count_word_ocurrence(df):
     counts = df.groupby('DocumentTitle')\
             .word.value_counts()\
             .to_frame()\
-            .rename(columns={'word':'n_w'})
+            .rename(columns={'word':'n_w'})\
+            .sort_values('n_w')
     return counts
 
 

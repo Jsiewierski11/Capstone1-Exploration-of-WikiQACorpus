@@ -21,37 +21,25 @@ if __name__ == '__main__':
     titles = read_cols('data/titles_to_use.txt')
     drops = read_cols('data/cols_to_drop.txt')
 
-    # plot_wordcloud(text_df['DocumentTitle'], max_words=100000, title='Word Cloud of Whole Dataset\'s Doc Titles', \
-    #                filepath='graphs/all_doc_titles.png')
-    
-    # plot_wordcloud(text_df['Sentence'], max_words=1000000000, title='Word Cloud of Whole Dataset\'s Sentences', \
-                    # filepath='graphs/all_doc_sentences.png')
-
     # Narrowing dataset    
     healthcare_df = select_doc_titles(text_df, titles)
     healthcare_df = drop_cols(healthcare_df, drops)
-
-    # plot_wordcloud(healthcare_df['DocumentTitle'], max_words = 999999999999, title='Word Cloud of QA Healtcare Dataset Question Types', \
-    #                              filepath='graphs/healthcareQs_wc.png')
-
-    # plot_wordcloud(healthcare_df['Sentence'], max_words = 999999999999, title='Word Cloud of QA Healtcare Dataset Answers', \
-    #                              filepath='graphs/healthcareAs_wc.png')
 
     # Bar chart of answers per question
     val_count = healthcare_df['DocumentTitle'].value_counts()
     make_barchart(val_count.index, val_count, filepath='graphs/answers_per_question.png', figsize=(35, 15), title='Number of answers for each category')    
     
     # Word Cloud of Top 5 Categories with the most answers
-    top_5 = ['List of muscles of the human body', 'Meiosis', 'Mandibular first molar', \
+    top_6 = ['List of muscles of the human body', 'Meiosis', 'Mandibular first molar', \
              'Comparison of the health care systems in Canada and the United States', \
              'Antibody', 'Cellular respiration']
 
-    wordcloud_of_answers(healthcare_df, top_5)
+    wordcloud_of_answers(healthcare_df, top_6)
 
     counts_df = count_words_pipeline(healthcare_df)
     total_counts_df = count_words_pipeline(text_df)
-    pretty_plot_top_n(counts_df['n_w'], top_n=1)
-    top_n_dfs = make_graphs_pipeline(healthcare_df, top_5)
+    pretty_plot_top_n(counts_df['n_w'], top_n=3, filepath='graphs/wordcount_with_stopwords.png')
+    top_n_dfs = make_graphs_pipeline(healthcare_df, top_6)
 
     plot_multi_top_n(top_n_dfs, filepath='graphs/collaged_topn.png', top_n=5, numrows=2, numcols=3)
     make_counts_violin(counts_df, filepath='graphs/healthcare_violin.png')
@@ -59,8 +47,8 @@ if __name__ == '__main__':
 
     counts_df = count_words_pipeline(healthcare_df, remove_stop=True)
     total_counts_df = count_words_pipeline(text_df, remove_stop=True)
-    pretty_plot_top_n(counts_df['n_w'], top_n=1)
-    top_n_dfs = make_graphs_pipeline(healthcare_df, top_5, remove_stop=True)
+    pretty_plot_top_n(counts_df['n_w'], top_n=3, filepath='graphs/wordcount_no_stopwords.png')
+    top_n_dfs = make_graphs_pipeline(healthcare_df, top_6, remove_stop=True)
     plot_multi_top_n(top_n_dfs, filepath='graphs/collaged_topn_no_stopwords.png', top_n=5, numrows=2, numcols=3)
     make_counts_violin(counts_df, filepath='graphs/healthcare_violin_no_stopwords.png')
     make_counts_violin(total_counts_df, filepath='graphs/wikiQA_violin_no_stopwords.png')
@@ -70,3 +58,11 @@ if __name__ == '__main__':
 
     plot_wordcloud(healthcare_df['Sentence'], max_words = 999999999999, title='Word Cloud of QA Healtcare Dataset Answers', \
                                  filepath='graphs/healthcareAs_no_stopwords_wc.png')
+
+    next_6 = ['Vitamin', 'Diagnosis-related group', 'Multiple sclerosis', 'Vitamin A', 'Digestion', \
+              'Health care in the United States']
+    next_n_dfs = make_graphs_pipeline(healthcare_df, next_6)
+    plot_multi_top_n(next_n_dfs, filepath='graphs/collaged_nextn.png', top_n=5, numrows=2, numcols=3)
+
+    next_n_dfs = make_graphs_pipeline(healthcare_df, next_6, remove_stop=True)
+    plot_multi_top_n(next_n_dfs, filepath='graphs/collaged_nextn_no_stopwords.png', top_n=5, numrows=2, numcols=3)
