@@ -9,6 +9,8 @@ https://www.kaggle.com/sudalairajkumar/simple-exploration-notebook-qiqc
 from wordcloud import WordCloud, STOPWORDS
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np 
+from scipy import special
 
 #Define the word cloud function with a max of 200 words
 def plot_wordcloud(text, mask=None, max_words=200, max_font_size=100, figure_size=(24.0,16.0), 
@@ -43,10 +45,17 @@ def plot_wordcloud(text, mask=None, max_words=200, max_font_size=100, figure_siz
     plt.savefig(filepath)
     plt.close()
 
-def make_barchart(x, y, filepath=None, figsize=(12, 8), title=None):
+def make_barchart(x, y, filepath=None, figsize=(12, 8), title=None, zipf=False):
     ax, fig = plt.subplots(1,1, figsize=figsize)
     plt.barh(range(len(x)), width=y)
     plt.yticks(range(len(x)), x, fontsize=14)
+    if zipf:
+        #define zipf distribution parameter. Has to be >1
+        a = 2.
+        end = len(x)
+        new_x = np.array(range(1, end))
+        y = (new_x)**(-a) / special.zetac(a)
+        plt.plot(y/max(y), new_x, linewidth=2, color='r')
 
     if title is not None:
         fig.set_title(title, fontsize=25)
@@ -63,7 +72,7 @@ def pretty_plot_top_n(series, top_n=5, index_level=0, filepath=None):
     make_barchart(r.index, r, filepath=filepath, figsize=(50, 30), \
                   title='Count of the Most Frequent Word in all Answers for Each Question')
 
-def plot_multi_top_n(series_arr, index_level=0, top_n=5, filepath=None, numrows=1, numcols=1):
+def plot_multi_top_n(series_arr, index_level=0, top_n=5, filepath=None, numrows=1, numcols=1, zipf=False):
     fig, axs = plt.subplots(numrows, numcols, figsize=(50,30))
     index = 0
     for i in range(0, numrows):
@@ -82,6 +91,15 @@ def plot_multi_top_n(series_arr, index_level=0, top_n=5, filepath=None, numrows=
             ax.set_yticks(list(range(len(r.index))))
             ax.set_yticklabels(r.index)
             ax.barh(range(len(r.index)), width=r)
+            if zipf:
+                #define zipf distribution parameter. Has to be >1
+                a = 2.
+                end = len(r.index)
+                new_x = np.array(range(1, end+1))
+                # new_x = np.arange(1., 70.)
+                y = (new_x)**(-a) / special.zetac(a)
+                ax.plot(y/max(y), new_x, linewidth=2, color='r')
+
             title = r.index[0][0]
             ax.set_title(title)
 

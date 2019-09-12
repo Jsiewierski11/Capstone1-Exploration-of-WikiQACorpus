@@ -1,5 +1,4 @@
 import pandas as pd 
-import numpy as np 
 from plotting import *
 from nltk.corpus import stopwords
 
