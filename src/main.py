@@ -31,7 +31,7 @@ def plotting_word_counts_no_stopwords(healthcare_df, text_df, counts_df, total_c
     # pretty_plot_top_n(total_counts_df['n_w'], top_n=3, filepath='graphs/wordcount_wiki_no_stopwords.png')
     top_n_dfs = make_violins_pipeline(healthcare_df, labels, remove_stop=True)
     plot_zipf(top_n_dfs, filepath='graphs/collaged_zipf_no_stopwords.png', top_n=50, numrows=2, numcols=3)
-    plot_multi_top_n(top_n_dfs, filepath='graphs/collaged_topn_no_stopwords.png', top_n=5, numrows=2, numcols=3)
+    plot_multi_top_n(top_n_dfs, filepath='graphs/collaged_topn_no_stopwords.png', top_n=10, numrows=2, numcols=3)
     make_counts_violin(counts_df, filepath='graphs/healthcare_violin_no_stopwords.png')
     make_counts_violin(total_counts_df, filepath='graphs/wikiQA_violin_no_stopwords.png')  
 
@@ -83,7 +83,7 @@ if __name__ == '__main__':
               'Health care in the United States']
     next_n_dfs = make_violins_pipeline(healthcare_df, next_6)
     plot_zipf(next_n_dfs, filepath='graphs/next6_zipf.png', top_n=50, numrows=2, numcols=3)
-    plot_multi_top_n(next_n_dfs, filepath='graphs/collaged_nextn.png', top_n=5, numrows=2, numcols=3)
+    plot_multi_top_n(next_n_dfs, filepath='graphs/collaged_nextn.png', top_n=10, numrows=2, numcols=3)
     next_n_dfs = make_violins_pipeline(healthcare_df, next_6, remove_stop=True)
-    plot_multi_top_n(next_n_dfs, filepath='graphs/collaged_nextn_no_stopwords.png', top_n=5, numrows=2, numcols=3)
+    plot_multi_top_n(next_n_dfs, filepath='graphs/collaged_nextn_no_stopwords.png', top_n=10, numrows=2, numcols=3)
     plot_zipf(next_n_dfs, filepath='graphs/next6_zipf_no_stopwords.png', top_n=50, numrows=2, numcols=3)
