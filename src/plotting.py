@@ -121,7 +121,7 @@ def plot_zipf(series_arr, index_level=0, top_n=5, filepath=None, numrows=1, numc
             ax.set_yticklabels(r.index)
             ax.barh(range(len(r.index)), width=np.log10(r))
             #define zipf distribution parameter. Has to be >1
-            a = 2.
+            a = 1.0001
             end = len(r.index)
             new_x = np.array(range(1, end+1))
             y = (new_x)**(-a) / special.zetac(a)

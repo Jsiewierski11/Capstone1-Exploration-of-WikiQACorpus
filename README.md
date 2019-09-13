@@ -79,7 +79,7 @@ Here are the bar charts of the 6 categories...
 
 ![top 6](graphs/collaged_topn_no_stopwords.png)
 
-For extra data collection I ran the next 6 categories with the highest amount of answers through the plotting pipeline and produced the following graphs...
+For extra data collection I ran the next 6 categories with the highest amount of answers (Vitamin, Diagnosis-related group, Multiple sclerosis, Vitamin A, Digestion, Health care in the United States) through the plotting pipeline and produced the following graphs...
 
 ### With Stop Words Included
 
@@ -97,7 +97,7 @@ From Wikipedia:
 > Zipf's law is an empirical law formulated using mathematical statistics that refers to the fact that many types of data studied in the physical and social sciences can be approximated with a Zipfian distribution, one of a family of related discrete power law probability distributions. Zipf distribution is related to the zeta distribution, but is not identical... Thus the most frequent word will occur approximately twice as often as the second most frequent word, three times as often as the third most frequent word, etc.: the rank-frequency distribution is an inverse relation. For example, in the Brown Corpus of American English text, the word the is the most frequently occurring word, and by itself accounts for nearly 7% of all word occurrences (69,971 out of slightly over 1 million). True to Zipf's Law, the second-place word of accounts for slightly over 3.5% of words (36,411 occurrences), followed by and (28,852).
 
 
-To investigate this further I took the log10 of the word counts, this time of the top 50 words, and overlayed it with the zipf's distribution to see how it matched up. The results weren't disapointing. 
+To investigate this further I took the log base 10 of the word counts, this time of the top 50 words, and overlayed it with the zipf's distribution to see how it matched up. The results weren't disapointing. 
 
 ### With Stop Words Included
 
