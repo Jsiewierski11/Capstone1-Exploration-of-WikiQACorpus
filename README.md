@@ -79,6 +79,15 @@ Here are the bar charts of the 6 categories...
 
 ![top 6](graphs/collaged_topn_no_stopwords.png)
 
+For extra data collection I ran the next 6 categories with the highest amount of answers through the plotting pipeline and produced the following graphs...
+
+### With Stop Words Included
+
+![next 6](graphs/collaged_nextn.png)
+
+### With Stop Words Removed
+
+![next 6](graphs/collaged_nextn_no_stopwords.png)
 
 ## An Interesting Trend...Zipf's Law
 While plotting these graphs an interesting trend kept occurring regardless if stop words were included or not. This trend is known as Zipf's Law.
@@ -86,3 +95,24 @@ While plotting these graphs an interesting trend kept occurring regardless if st
 ### Zipf's Law
 From Wikipedia:
 > Zipf's law is an empirical law formulated using mathematical statistics that refers to the fact that many types of data studied in the physical and social sciences can be approximated with a Zipfian distribution, one of a family of related discrete power law probability distributions. Zipf distribution is related to the zeta distribution, but is not identical... Thus the most frequent word will occur approximately twice as often as the second most frequent word, three times as often as the third most frequent word, etc.: the rank-frequency distribution is an inverse relation. For example, in the Brown Corpus of American English text, the word the is the most frequently occurring word, and by itself accounts for nearly 7% of all word occurrences (69,971 out of slightly over 1 million). True to Zipf's Law, the second-place word of accounts for slightly over 3.5% of words (36,411 occurrences), followed by and (28,852).
+
+
+To investigate this further I took the log10 of the word counts, this time of the top 50 words, and overlayed it with the zipf's distribution to see how it matched up. The results weren't disapointing. 
+
+### With Stop Words Included
+
+![top 6](graphs/collaged_zipf.png)
+![top 6](graphs/next6_zipf.png)
+
+### With Stop Words Removed
+
+![top 6](graphs/collaged_zipf_no_stopwords.png)
+![top 6](graphs/next6_zipf_no_stopwords.png)
+
+Even when we zoom out and look at the whole dataset that I had picked out we see the zipf's distribution coming into even by just looking at the top 3 most frequent words.
+![word count](graphs/wordcount_with_stopwords.png)
+![word count](graphs/wordcount_no_stopwords.png)
+
+## Conclusion
+
+While the top of the distribution, where the word count is the highest, the overall trend did occurr throughout the entirety of the distribution. It was also notable that the distribution seemed to be unaffected by the inclusion of stop words showing the true universality of the distribution. Potential reasons for why some of the word counts were a little top heavy was due to the fact that they were grouped by a certain category, increasing the likely hood that the same words would show up multiple times. Taking this into account it's important to remember that zipf's law is emergent and that it can not be proven by theory for when it shows up. At least not yet.
