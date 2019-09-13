@@ -1,4 +1,4 @@
-# Exploration of Zipf's Law on the WikiQA Corpus Through Data Visualization
+# Exploration of the WikiQA Corpus: Data Visualization and Zipf's Law
 
 # Jarid Siewierski
 
@@ -69,7 +69,19 @@ But here are 2 of my favorites...
 
 ![muscle list](graphs/List_of_muscles_of_the_human_body_violin.png)
 
+Here are the bar charts of the 6 categories...
+
+### With Stop Words Included
+
+![top 6](graphs/collaged_topn.png)
+
+### With Stop Words Removed
+
+![top 6](graphs/collaged_topn_no_stopwords.png)
+
+
 ## An Interesting Trend...Zipf's Law
+While plotting these graphs an interesting trend kept occurring regardless if stop words were included or not. This trend is known as Zipf's Law.
 
 ### Zipf's Law
 From Wikipedia:
