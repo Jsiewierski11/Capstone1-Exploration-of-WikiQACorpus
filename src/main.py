@@ -63,6 +63,7 @@ if __name__ == '__main__':
 
     val_count = healthcare_df['DocumentTitle'].value_counts()
     # make_barchart(val_count.index, val_count, filepath='graphs/answers_per_question.png', figsize=(35, 15), title='Number of answers for each category')    
+    make_barchart_zipf(val_count.index, val_count, filepath='graphs/answers_per_question_zipf.png', figsize=(35, 15), title='Number of answers for each category', zipf=True)
     word_cloud_whole_dataset(healthcare_df)
 
     # val_count = text_df['DocumentTitle'].value_counts()

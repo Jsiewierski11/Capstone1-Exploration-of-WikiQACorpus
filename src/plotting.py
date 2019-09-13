@@ -7,14 +7,14 @@ import numpy as np
 from scipy import special
 
 #Define the word cloud function with a max of 200 words
-def plot_wordcloud(text, mask=None, max_words=200, max_font_size=100, figure_size=(24.0,16.0), 
-                   title = None, title_size=40, image_color=False, filepath=None):
 '''
 Code below is taken from this Kaggle project:
 https://www.kaggle.com/spurryag/beginner-attempt-at-nlp-workflow
 That user sourced the code from here:
 https://www.kaggle.com/sudalairajkumar/simple-exploration-notebook-qiqc
 '''
+def plot_wordcloud(text, mask=None, max_words=200, max_font_size=100, figure_size=(24.0,16.0), 
+                   title = None, title_size=40, image_color=False, filepath=None):
     stopwords = set(STOPWORDS)
     #define additional stop words that are not contained in the dictionary
     more_stopwords = {'one', 'br', 'Po', 'th', 'sayi', 'fo', 'Unknown', 'used'}
@@ -51,10 +51,30 @@ def make_barchart(x, y, filepath=None, figsize=(12, 8), title=None, zipf=False):
     plt.yticks(range(len(x)), x, fontsize=14)
     if zipf:
         #define zipf distribution parameter. Has to be >1
-        a = 2.
+        a = 1.00001
         end = len(x)
-        new_x = np.array(range(1, end))
+        new_x = np.array(range(1, end+1))
         y = (new_x)**(-a) / special.zetac(a)
+        new_x = np.array(range(0, end))
+        plt.plot(y/max(y), new_x, linewidth=2, color='r')
+
+    if title is not None:
+        fig.set_title(title, fontsize=25)
+    
+    plt.savefig(filepath)
+    plt.close()
+
+def make_barchart_zipf(x, y, filepath=None, figsize=(12, 8), title=None, zipf=True):
+    ax, fig = plt.subplots(1,1, figsize=figsize)
+    plt.barh(range(len(x)), width=np.log10(y))
+    plt.yticks(range(len(x)), x, fontsize=14)
+    if zipf:
+        #define zipf distribution parameter. Has to be >1
+        a = 1.00001
+        end = len(x)
+        new_x = np.array(range(1, end+1))
+        y = (new_x)**(-a) / special.zetac(a)
+        new_x = np.array(range(0, end))
         plt.plot(y/max(y), new_x, linewidth=2, color='r')
 
     if title is not None:
