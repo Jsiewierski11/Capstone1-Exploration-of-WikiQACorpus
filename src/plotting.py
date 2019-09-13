@@ -72,7 +72,7 @@ def pretty_plot_top_n(series, top_n=5, index_level=0, filepath=None):
     make_barchart(r.index, r, filepath=filepath, figsize=(50, 30), \
                   title='Count of the Most Frequent Word in all Answers for Each Question')
 
-def plot_multi_top_n(series_arr, index_level=0, top_n=5, filepath=None, numrows=1, numcols=1, zipf=False):
+def plot_multi_top_n(series_arr, index_level=0, top_n=5, filepath=None, numrows=1, numcols=1):
     fig, axs = plt.subplots(numrows, numcols, figsize=(50,30))
     index = 0
     for i in range(0, numrows):
@@ -91,14 +91,42 @@ def plot_multi_top_n(series_arr, index_level=0, top_n=5, filepath=None, numrows=
             ax.set_yticks(list(range(len(r.index))))
             ax.set_yticklabels(r.index)
             ax.barh(range(len(r.index)), width=r)
-            if zipf:
-                #define zipf distribution parameter. Has to be >1
-                a = 2.
-                end = len(r.index)
-                new_x = np.array(range(1, end+1))
-                # new_x = np.arange(1., 70.)
-                y = (new_x)**(-a) / special.zetac(a)
-                ax.plot(y/max(y), new_x, linewidth=2, color='r')
+
+            title = r.index[0][0]
+            ax.set_title(title)
+
+            index += 1
+
+    plt.tight_layout()
+    plt.savefig(filepath)
+    plt.close()
+
+def plot_zipf(series_arr, index_level=0, top_n=5, filepath=None, numrows=1, numcols=1):
+    fig, axs = plt.subplots(numrows, numcols, figsize=(50,30))
+    index = 0
+    for i in range(0, numrows):
+        for j in range(0, numcols):
+            # Check for end of array
+            if index == len(series_arr):
+                plt.savefig(filepath)
+                plt.tight_layout()
+                plt.close()
+                return
+            r = series_arr[index] \
+                .groupby(level=index_level) \
+                .nlargest(top_n) \
+                .reset_index(level=index_level, drop=True)
+            ax = axs[i, j]
+            ax.set_yticks(list(range(len(r.index))))
+            ax.set_yticklabels(r.index)
+            ax.barh(range(len(r.index)), width=np.log10(r))
+            #define zipf distribution parameter. Has to be >1
+            a = 2.
+            end = len(r.index)
+            new_x = np.array(range(1, end+1))
+            y = (new_x)**(-a) / special.zetac(a)
+            new_x = np.array(range(0, end))
+            ax.plot(y/max(y), new_x, linewidth=2, color='r')
 
             title = r.index[0][0]
             ax.set_title(title)

@@ -50,4 +50,27 @@ def count_words_pipeline(df, remove_stop=False):
     words_df = remove_empty_word_cols(words_df)
     return count_word_ocurrence(words_df)
 ```
+This was the resulting dataframe that the above function returned:
 
+![word count dataframe](images/word_count_dataframe.png)
+
+With this dataframe I was able to run it through a pipeline I had created to create bar charts displaying the top 10 words with the highest word count and violin plots of the distribution of word counts for each category.
+Most of the violin charts didn't provide much insight and looked similar to this one:
+
+![healthcare violin](graphs/healthcare_violin.png) 
+
+But here are 2 of my favorites...
+
+### Diagnosis-related with no stop words:
+
+![diagnosis-related with no stop words](graphs/Diagnosis-related_group_violin_no_stop.png)
+
+### List of muscles of the human body with stop words
+
+![muscle list](graphs/List_of_muscles_of_the_human_body_violin.png)
+
+## An Interesting Trend...Zipf's Law
+
+### Zipf's Law
+From Wikipedia:
+> Zipf's law is an empirical law formulated using mathematical statistics that refers to the fact that many types of data studied in the physical and social sciences can be approximated with a Zipfian distribution, one of a family of related discrete power law probability distributions. Zipf distribution is related to the zeta distribution, but is not identical... Thus the most frequent word will occur approximately twice as often as the second most frequent word, three times as often as the third most frequent word, etc.: the rank-frequency distribution is an inverse relation. For example, in the Brown Corpus of American English text, the word the is the most frequently occurring word, and by itself accounts for nearly 7% of all word occurrences (69,971 out of slightly over 1 million). True to Zipf's Law, the second-place word of accounts for slightly over 3.5% of words (36,411 occurrences), followed by and (28,852).
