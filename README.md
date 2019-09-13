@@ -109,10 +109,10 @@ To investigate this further I took the log base 10 of the word counts, this time
 ![top 6](graphs/collaged_zipf_no_stopwords.png)
 ![top 6](graphs/next6_zipf_no_stopwords.png)
 
-Even when we zoom out and look at the whole dataset that I had picked out we see the zipf's distribution coming into even by just looking at the top 3 most frequent words.
+Even when we zoom out and look at the whole dataset that I had picked out we see the zipf's distribution coming into play even by just looking at the top 3 most frequent words.
 ![word count](graphs/wordcount_with_stopwords.png)
 ![word count](graphs/wordcount_no_stopwords.png)
 
 ## Conclusion
 
-While the top of the distribution, where the word count is the highest, the overall trend did occurr throughout the entirety of the distribution. It was also notable that the distribution seemed to be unaffected by the inclusion of stop words showing the true universality of the distribution. Potential reasons for why some of the word counts were a little top heavy was due to the fact that they were grouped by a certain category, increasing the likely hood that the same words would show up multiple times. Taking this into account it's important to remember that zipf's law is emergent and that it can not be proven by theory for when it shows up. At least not yet.
+While the top of the distribution, where the word count is the highest, didn't follow zipf's distribution very closely the overall trend did occurr throughout the entirety of the word count distribution. It was also notable that the distribution seemed to be unaffected by the inclusion of stop words showing the true universality of the distribution. Potential reasons for why some of the word counts were a little top heavy could be due to the fact that they were grouped by a certain category, increasing the likely hood that the same words would show up multiple times. Another point to emphasize is that some questions had more correct answers than others. An interesting point of further research could look to see if groups of only correct answers follow zipf's law. My guess would be that it doesn't closely follow zipf's law as correct answers will most likely have very similar langauage and have a high word count for several words. Taking this into account it's important to remember that zipf's law is emergent and that it can not be proven by theory for when it shows up. At least not yet.
