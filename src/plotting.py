@@ -1,9 +1,3 @@
-'''
-Code below is taken from this Kaggle project:
-https://www.kaggle.com/spurryag/beginner-attempt-at-nlp-workflow
-That user sourced the code from here:
-https://www.kaggle.com/sudalairajkumar/simple-exploration-notebook-qiqc
-'''
 
 #import the wordcloud package
 from wordcloud import WordCloud, STOPWORDS
@@ -15,6 +9,12 @@ from scipy import special
 #Define the word cloud function with a max of 200 words
 def plot_wordcloud(text, mask=None, max_words=200, max_font_size=100, figure_size=(24.0,16.0), 
                    title = None, title_size=40, image_color=False, filepath=None):
+'''
+Code below is taken from this Kaggle project:
+https://www.kaggle.com/spurryag/beginner-attempt-at-nlp-workflow
+That user sourced the code from here:
+https://www.kaggle.com/sudalairajkumar/simple-exploration-notebook-qiqc
+'''
     stopwords = set(STOPWORDS)
     #define additional stop words that are not contained in the dictionary
     more_stopwords = {'one', 'br', 'Po', 'th', 'sayi', 'fo', 'Unknown', 'used'}
