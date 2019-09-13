@@ -10,7 +10,7 @@ For this project I decided to use the WikiQA Corpus. Released in 2016 the datase
 ## Project Goals
 - Enhance my Data Visualization skills
 - Pracice cleaning text data for NLP projects
-- Explore if Zipf's Law stands as we narrow down the corpa
+- Analysis of Zipf's Law on the dataset
 
 ## Cleaning 
 With the dataset containing 3044 different questions and 2809 different categories I had to decide how to narrow down the dataset. I handpicked roughly 50 categories loosely relating to healtcare to look at. This smaller dataset had roughly 570 rows with plenty of text to sift through. Using the WordCloud library I was able to produce the following word clouds on both the entire dataset and my subset, both with no stopwords.
